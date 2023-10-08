@@ -5,19 +5,24 @@
 /** Turn LED1 on.  */
 void led_on (void)
 {
-    /* TODO!  */
+    pio_output_high(PC2_PIO);
+}
+
+void led_toggle(void)
+{
+    pio_output_toggle(PC2_PIO);
 }
 
 
 /** Turn LED1 off.  */
 void led_off (void)
 {
-    /* TODO!  */
+    pio_output_low(PC2_PIO);
 }
 
 
 /** Initialise LED1.  */
 void led_init (void)
 {
-    /* TODO!  */
+    pio_config_set (PC2_PIO, PIO_OUTPUT_LOW);
 }

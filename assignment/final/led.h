@@ -11,6 +11,4 @@ void led_off (void);
 
 /** Initialise LED1.  */
 void led_init (void);
-
-void led_toggle(void);
 #endif

@@ -1,3 +1,4 @@
+#include <avr/io.h>
 #include "system.h"
 #include "led.h"
 #include "pacer.h"

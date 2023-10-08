@@ -23,6 +23,7 @@ int main (void)
 {
     char character = 'A';
 
+
     system_init ();
     tinygl_init (PACER_RATE);
     tinygl_font_set (&font5x7_1);
@@ -30,6 +31,7 @@ int main (void)
     navswitch_init ();
 
     /* TODO: Initialise IR driver.  */
+    ir_uart_init();
 
 
     pacer_init (PACER_RATE);
@@ -48,6 +50,17 @@ int main (void)
 
         /* TODO: Transmit the character over IR on a NAVSWITCH_PUSH
            event.  */
+        if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
+            ir_uart_putc(character);
+        } else { 
+            if (ir_uart_read_ready_p()) {
+                const char c = ir_uart_getc();
+                if (c >= 65 && c <= 122) {
+                    character = c;
+                }
+            }
+        }
+
         
         display_character (character);
         
