@@ -13,6 +13,157 @@
 #define PACER_RATE 500
 #define MESSAGE_RATE 30
 
+void resetPins(void)
+{
+        
+    //Initialises the matrix Rows.
+    pio_config_set(PB6_PIO, PIO_OUTPUT_HIGH);
+    pio_config_set(PB5_PIO, PIO_OUTPUT_HIGH);
+    pio_config_set(PB4_PIO, PIO_OUTPUT_HIGH);
+    pio_config_set(PB3_PIO, PIO_OUTPUT_HIGH);
+    pio_config_set(PB2_PIO, PIO_OUTPUT_HIGH);
+    pio_config_set(PB1_PIO, PIO_OUTPUT_HIGH);
+    pio_config_set(PB0_PIO, PIO_OUTPUT_HIGH);
+
+    //Initialises the matrix Columns
+    pio_config_set(PC6_PIO, PIO_OUTPUT_HIGH);
+    pio_config_set(PB7_PIO, PIO_OUTPUT_HIGH);
+    pio_config_set(PC4_PIO, PIO_OUTPUT_HIGH);
+    pio_config_set(PC7_PIO, PIO_OUTPUT_HIGH);
+    pio_config_set(PC5_PIO, PIO_OUTPUT_HIGH);
+}
+
+void displayNorth(void)
+{
+    // Displays a north facing arrow.
+    resetPins();
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW1_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW6_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW7_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+
+    resetPins();
+    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL1_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL5_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+
+    resetPins();
+    pio_config_set(LEDMAT_ROW2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+
+    resetPins();
+    pio_config_set(LEDMAT_ROW1_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+}
+
+void displayEast(void)
+{
+    //Displays an east facing arrow.
+    resetPins();
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW6_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+
+    resetPins();
+    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+
+    resetPins();
+    pio_config_set(LEDMAT_COL1_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL5_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);    
+    pacer_wait();
+}
+
+void displayWest(void)
+{
+    //Displays a west facing arrow.
+    resetPins();
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW6_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+
+    resetPins();
+    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+
+    resetPins();
+    pio_config_set(LEDMAT_COL1_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL5_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);    
+    pacer_wait();
+}
+
+void displaySouth(void)
+{
+    //Displays an arrow that faces... you guessed it. SOUTH!
+        // Displays a north facing arrow.
+    resetPins();
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW1_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW6_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_ROW7_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+
+    resetPins();
+    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL1_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL5_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+
+    resetPins();
+    pio_config_set(LEDMAT_ROW6_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+
+    resetPins();
+    pio_config_set(LEDMAT_ROW7_PIO, PIO_OUTPUT_LOW);
+    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
+    pacer_wait();
+}
+
 int main (void)
 {
     system_init ();
@@ -35,7 +186,15 @@ int main (void)
 
     uint8_t playerFound = false;
     uint8_t playerNumber = 0;
-    //bool gameCompleted = false;
+    bool gameCompleted = false;
+    bool currentTurn = 0;
+    bool isPushed = false;
+
+    //ORGANISE HOW WE WILL STORE COMMANDS!
+    //I'm thinking we add a char to a string and dynamically increase the size of the array
+    //and then read that as what the required input is.
+    
+    //char memoryList[];
 
     //Flash a startup sequence to not have players immediately become player 1.
     pacer_init(8);
@@ -53,6 +212,7 @@ int main (void)
         pacer_wait();
         tinygl_update();
 
+        //Player 2 receive logic.
         if (ir_uart_read_ready_p()) {
             if (ir_uart_getc() == '.') {
                 playerFound = true;
@@ -66,6 +226,7 @@ int main (void)
             led_on();
             //Send a signal to the other player, letting them know a player has been found.
             ir_uart_putc('.');
+            currentTurn = 1;
         }
     }
 
@@ -77,9 +238,81 @@ int main (void)
         tinygl_text("P1");
     }
 
-    //debugging player numbers.
+    /*debugging player numbers.
     while(1) {
         pacer_wait();
         tinygl_update();
+    }*/
+
+
+    //Enter the MAIN loop.
+    resetPins();
+    while(!gameCompleted) {
+        while (currentTurn) {
+            navswitch_update();
+            pacer_wait();
+            
+
+
+
+
+            //NORTH LOGIC
+            if (navswitch_down_p(NAVSWITCH_NORTH) && !isPushed) {
+                
+                displayNorth();
+
+                //If key is released. We analyse the press AFTER release, whether it was a match.
+                if (navswitch_up_p(NAVSWITCH_NORTH)) {
+                    isPushed = true;
+                }
+            }
+
+
+
+
+            //EAST LOGIC
+            else if (navswitch_down_p(NAVSWITCH_EAST) && !isPushed) {
+                
+                displayEast();
+
+                //If key is released. We analyse the press AFTER release, whether it was a match.
+                if (navswitch_up_p(NAVSWITCH_EAST)) {
+                    isPushed = true;
+                }
+            }
+
+            else if (navswitch_down_p(NAVSWITCH_WEST) && !isPushed) {
+                
+                displayWest();
+
+                //If key is released. We analyse the press AFTER release, whether it was a match.
+                if (navswitch_up_p(NAVSWITCH_WEST)) {
+                    isPushed = true;
+                }
+            }
+
+
+            else if (navswitch_down_p(NAVSWITCH_SOUTH) && !isPushed) {
+                
+                displaySouth();
+                
+                //If key is released. We analyse the press AFTER release, whether it was a match.
+                if (navswitch_up_p(NAVSWITCH_SOUTH)) {
+                    isPushed = true;
+                }
+            }
+
+
+
+            resetPins();
+
+
+                //Add a north input to the current comparison memory for the game.
+                //We need to add a completed round variable, and check if they've won.
+                //If they've won, add a single character to the end of the new one, and send it to opponnet.
+            //Current player's logic.
+
+            //Receiving player's logic.
+        }
     }
 }
