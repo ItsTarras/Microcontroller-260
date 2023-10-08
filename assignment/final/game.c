@@ -27,16 +27,27 @@ int main (void)
     //Set it to scroll the text
     tinygl_text_mode_set (TINYGL_TEXT_MODE_SCROLL);
     //Set the update rate.
-    pacer_init (PACER_RATE);
+    
     /*Set up a pacer with 4hz frequency (1/4 of a second)*/
     button_init();
     led_init();
     ir_uart_init();
 
-    uint8_t playerFound = 0;
+    uint8_t playerFound = false;
     uint8_t playerNumber = 0;
+    //bool gameCompleted = false;
+
+    //Flash a startup sequence to not have players immediately become player 1.
+    pacer_init(8);
+    for (int i = 0; i < 4; i++) {
+        led_on();
+        pacer_wait();
+        led_off();
+        pacer_wait();
+    }
 
     //Start by creating a function that both receives and can have a button clicked.
+    pacer_init (PACER_RATE);
     while (!playerFound)
     {
         pacer_wait();
@@ -58,8 +69,17 @@ int main (void)
         }
     }
 
+
+    //Setting debugging info for player numbers.
     if (playerNumber == 2) {
-        printf("Hello");
+        tinygl_text("P2");
+    } else {
+        tinygl_text("P1");
     }
 
+    //debugging player numbers.
+    while(1) {
+        pacer_wait();
+        tinygl_update();
+    }
 }
