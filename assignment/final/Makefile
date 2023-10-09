@@ -34,6 +34,18 @@ button.o: button.c button.h
 led.o: led.c led.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+playerSelect.o: playerSelect.c playerSelect.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+directionsArray.o: directionsArray.c directionsArray.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+direction.o: direction.c direction.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+countdown.o: countdown.c countdown.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
 tinygl.o: ../../utils/tinygl.c ../../drivers/avr/system.h ../../drivers/display.h ../../utils/font.h ../../utils/tinygl.h
 		$(CC) -c $(CFLAGS) $< -o $@
 
@@ -64,7 +76,7 @@ timer0.o: ../../drivers/avr/timer0.c ../../drivers/avr/bits.h ../../drivers/avr/
 prescale.o: ../../drivers/avr/prescale.c ../../drivers/avr/prescale.h ../../drivers/avr/system.h
 	$(CC) -c $(CFLAGS) $< -o $@
 # Link: create ELF output file from object files.
-game.out: game.o system.o pacer.o pio.o button.o led.o display.o ledmat.o navswitch.o font.o tinygl.o usart1.o ir_uart.o timer0.o timer.o prescale.o
+game.out: game.o system.o pacer.o pio.o directionsArray.o button.o countdown.o led.o display.o playerSelect.o ledmat.o navswitch.o font.o tinygl.o usart1.o ir_uart.o timer0.o timer.o prescale.o direction.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 

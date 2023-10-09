@@ -1,4 +1,5 @@
 #include <avr/io.h>
+#include <stdlib.h>
 #include "system.h"
 #include "pio.h"
 #include "pacer.h"
@@ -9,160 +10,14 @@
 #include "ir_uart.h"
 #include "tinygl.h"
 #include "../fonts/font5x7_1.h"
+#include "direction.h"
+#include "playerSelect.h"
+#include "countdown.h"
+#include "directionsArray.h"
 
 #define PACER_RATE 500
 #define MESSAGE_RATE 30
-
-void resetPins(void)
-{
-        
-    //Initialises the matrix Rows.
-    pio_config_set(PB6_PIO, PIO_OUTPUT_HIGH);
-    pio_config_set(PB5_PIO, PIO_OUTPUT_HIGH);
-    pio_config_set(PB4_PIO, PIO_OUTPUT_HIGH);
-    pio_config_set(PB3_PIO, PIO_OUTPUT_HIGH);
-    pio_config_set(PB2_PIO, PIO_OUTPUT_HIGH);
-    pio_config_set(PB1_PIO, PIO_OUTPUT_HIGH);
-    pio_config_set(PB0_PIO, PIO_OUTPUT_HIGH);
-
-    //Initialises the matrix Columns
-    pio_config_set(PC6_PIO, PIO_OUTPUT_HIGH);
-    pio_config_set(PB7_PIO, PIO_OUTPUT_HIGH);
-    pio_config_set(PC4_PIO, PIO_OUTPUT_HIGH);
-    pio_config_set(PC7_PIO, PIO_OUTPUT_HIGH);
-    pio_config_set(PC5_PIO, PIO_OUTPUT_HIGH);
-}
-
-void displayNorth(void)
-{
-    // Displays a north facing arrow.
-    resetPins();
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW1_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW6_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW7_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-
-    resetPins();
-    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL1_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL5_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-
-    resetPins();
-    pio_config_set(LEDMAT_ROW2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-
-    resetPins();
-    pio_config_set(LEDMAT_ROW1_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-}
-
-void displayEast(void)
-{
-    //Displays an east facing arrow.
-    resetPins();
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW6_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-
-    resetPins();
-    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-
-    resetPins();
-    pio_config_set(LEDMAT_COL1_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL5_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);    
-    pacer_wait();
-}
-
-void displayWest(void)
-{
-    //Displays a west facing arrow.
-    resetPins();
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW6_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-
-    resetPins();
-    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-
-    resetPins();
-    pio_config_set(LEDMAT_COL1_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL5_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);    
-    pacer_wait();
-}
-
-void displaySouth(void)
-{
-    //Displays an arrow that faces... you guessed it. SOUTH!
-        // Displays a north facing arrow.
-    resetPins();
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW1_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW6_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_ROW7_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-
-    resetPins();
-    pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL1_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL5_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-
-    resetPins();
-    pio_config_set(LEDMAT_ROW6_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-
-    resetPins();
-    pio_config_set(LEDMAT_ROW7_PIO, PIO_OUTPUT_LOW);
-    pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_LOW);
-    pacer_wait();
-}
+#define TURN_LIMIT 100
 
 int main (void)
 {
@@ -179,140 +34,133 @@ int main (void)
     tinygl_text_mode_set (TINYGL_TEXT_MODE_SCROLL);
     //Set the update rate.
     
-    /*Set up a pacer with 4hz frequency (1/4 of a second)*/
+    //Initialise backend.
     button_init();
     led_init();
     ir_uart_init();
 
-    uint8_t playerFound = false;
+    //Store local variables.
     uint8_t playerNumber = 0;
     bool gameCompleted = false;
     bool currentTurn = 0;
-    bool isPushed = false;
+    uint8_t numCommands = 1;
 
     //ORGANISE HOW WE WILL STORE COMMANDS!
+    char* commands = calloc(sizeof(char), TURN_LIMIT);
+
+
     //I'm thinking we add a char to a string and dynamically increase the size of the array
     //and then read that as what the required input is.
     
     //char memoryList[];
 
-    //Flash a startup sequence to not have players immediately become player 1.
-    pacer_init(8);
-    for (int i = 0; i < 4; i++) {
-        led_on();
-        pacer_wait();
-        led_off();
-        pacer_wait();
+    
+
+    //Start the initial player selection process.
+    playerNumber = playerSelect();
+    resetPins();
+
+    
+    //Set the initial turn of player1.
+    if (playerNumber == 1) {
+        currentTurn = true;
+    } else {
+        numCommands = 2;
     }
+
+
 
     //Start by creating a function that both receives and can have a button clicked.
     pacer_init (PACER_RATE);
-    while (!playerFound)
-    {
-        pacer_wait();
-        tinygl_update();
-
-        //Player 2 receive logic.
-        if (ir_uart_read_ready_p()) {
-            if (ir_uart_getc() == '.') {
-                playerFound = true;
-                playerNumber = 2;
-            }
-        }
-        //check if player 1 has been selected.
-        else if (button_pressed_p()) {
-            playerFound = true;
-            playerNumber = 1;
-            led_on();
-            //Send a signal to the other player, letting them know a player has been found.
-            ir_uart_putc('.');
-            currentTurn = 1;
-        }
-    }
-
-
-    //Setting debugging info for player numbers.
-    if (playerNumber == 2) {
-        tinygl_text("P2");
-    } else {
-        tinygl_text("P1");
-    }
-
-    /*debugging player numbers.
-    while(1) {
-        pacer_wait();
-        tinygl_update();
-    }*/
-
 
     //Enter the MAIN loop.
-    resetPins();
     while(!gameCompleted) {
-        while (currentTurn) {
-            navswitch_update();
-            pacer_wait();
+        if (currentTurn) {
+            resetPins();
+            //Update the command array in receive.
+            //Start a countdown from 3, 2, 1 to display the commands in a sequence.
+            //if it's not the first turn.
+            if (numCommands != 1) {
+                //Do a 3, 2, 1 countdown.
+                startCountdown();
+                resetPins();
+
+                //Display every direction required from the commands array.
+
+                //Start the loop where we require the player to mimic it.
+                for (int i = 0; i < numCommands; i++) {
+                    if (commands[i] == 'n') {
+                        for (int i = 0; i < 30; i++) {
+                            displayNorth();
+                            pacer_wait();
+                        }
+
+                    } else if (commands[i] == 'e') {
+                        
+                        for (int i = 0; i < 30; i++) {
+                            displayEast();
+                            pacer_wait();
+                        }
+                    } else if (commands[i] == 's') {
+                        
+                        for (int i = 0; i < 30; i++) {
+                            displaySouth();
+                            pacer_wait();
+                        }
+                    } else if (commands[i] == 'w') {
+                        for (int i = 0; i < 30; i++) {
+                            displayWest();
+                            pacer_wait();
+                        }
+                    }
+
+                    resetPins();
+                    for (int i = 0; i < 20; i++) {
+                        pacer_wait();
+                    }
+
+                }
+            } 
+
+            //Flash a text that says 'Input Direction'.
+            //Chuck it into the countdown.c file and header.
+
+            //Add the new commands
+            char input = getDirection();
+            currentTurn = false;
+
+            //Add to our array the input.
+            addToArray(input, commands, numCommands - 1);
+
+            //If the player succeeded (or it's turn 0), add a new command to send.
+            numCommands += 2;
+
+            
             
 
 
+            
+            //Append the direction character to ours, and also send it to the opponent.
 
-
-            //NORTH LOGIC
-            if (navswitch_down_p(NAVSWITCH_NORTH) && !isPushed) {
-                
-                displayNorth();
-
-                //If key is released. We analyse the press AFTER release, whether it was a match.
-                if (navswitch_up_p(NAVSWITCH_NORTH)) {
-                    isPushed = true;
-                }
-            }
-
-
-
-
-            //EAST LOGIC
-            else if (navswitch_down_p(NAVSWITCH_EAST) && !isPushed) {
-                
-                displayEast();
-
-                //If key is released. We analyse the press AFTER release, whether it was a match.
-                if (navswitch_up_p(NAVSWITCH_EAST)) {
-                    isPushed = true;
-                }
-            }
-
-            else if (navswitch_down_p(NAVSWITCH_WEST) && !isPushed) {
-                
-                displayWest();
-
-                //If key is released. We analyse the press AFTER release, whether it was a match.
-                if (navswitch_up_p(NAVSWITCH_WEST)) {
-                    isPushed = true;
-                }
-            }
-
-
-            else if (navswitch_down_p(NAVSWITCH_SOUTH) && !isPushed) {
-                
-                displaySouth();
-                
-                //If key is released. We analyse the press AFTER release, whether it was a match.
-                if (navswitch_up_p(NAVSWITCH_SOUTH)) {
-                    isPushed = true;
-                }
-            }
-
-
+            //Player has finished their turn.
+            currentTurn = true;
+            
 
             resetPins();
 
-
-                //Add a north input to the current comparison memory for the game.
-                //We need to add a completed round variable, and check if they've won.
-                //If they've won, add a single character to the end of the new one, and send it to opponnet.
+            //We need to add a completed round variable, and check if they've won.
+            //If they've won, add a single character to the end of the new one, and send it to opponnet.
             //Current player's logic.
 
+            
+        } else if (ir_uart_read_ready_p()) {
             //Receiving player's logic.
+            /* Wait to receive an input. Once you do, add it to your own personal array.*/
+            char received = ir_uart_getc();
+            if (received == 'n' || received == 'e' || received == 's' || received == 'w') {
+                addToArray(received, commands, numCommands);
+                currentTurn = true;
+            }
         }
     }
 }
