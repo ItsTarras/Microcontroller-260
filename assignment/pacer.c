@@ -1,6 +1,10 @@
 #include <avr/io.h>
 #include "pacer.h"
 
+//twe36 Tarras Weir 99406503
+//lhe73 Luke Henry Paiti 42335744
+//This is a c file that deals with waiting. It creates a pacer, and can be used to delay flashes.
+
 static uint16_t pacer_period;
 
 /* Initialise the pacer module.  */
@@ -29,6 +33,7 @@ void pacer_init (uint16_t pacer_frequency)
 /* Pace a while loop.  */
 void pacer_wait (void)
 {
+    //Sits inside the loop while the counter hasn't reached the pacer_period (the limit we want to reach).
     while (TCNT1 < pacer_period) {
         continue;
     }

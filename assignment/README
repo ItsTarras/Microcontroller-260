@@ -1,16 +1,26 @@
-Use this directory for your final game and its module(s).  Only the
-files in this directory will be marked.
+//twe36 Tarras Weir 99406503
+//lhe73 Luke Henry Paiti 42335744
+ENCE260 Assignment 2.
 
-Ensure you use the git add command to add your files to the git
-repository.  For example,
+The following instructions are steps on how to play the memory game on the microcontroller.
 
-git add module.c
+1. Start both controllers. They will be on, as indicated by the startup LED sequence, followed by
+    "Player 1 push button" being displayed.
 
-Then use the git commit command to add the file contents
+2. Player 1 should push the button, and this will send player 2 into receive mode. While in receive mode,
+    Player 2 will have a blank board.
 
-git commit -m "Added file" module.c
+3. Player 1 will be told to "ADD" a command. Player 1 will use the joystick, and input the direction they want
+    to add to the command array.
 
-The use the git push command to copy the changes to the remote git server
+4. Player 1's LED will turn off. Player 2's will turn on to signify it's their turn. 
 
-git push
+5. Player 2 will have a countdown display. After this hits 0, it will relay the sequence to them, which they must copy, which will be communicated by their LED flashing when it's done.
 
+6. If they relay the sequence correctly, it will be their turn to "ADD" a command.
+
+7. Repeat this until someone messes up.
+
+8. The boards will display "Loser" and "Winner" respectively.
+
+9. If the players want to play again, click the middle joystick when displaying "Winner" or "Loser". They will be sent back to the player selection phase.
